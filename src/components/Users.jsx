@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const Users = () => {
-    const [users, setUsers] = useState()
+    const [users, setUsers] = useState([])
     const mostrarUsers = async() =>{
         await fetch('https://jsonplaceholder.typicode.com/users')
         .then((response)=> response.json())
@@ -10,10 +10,20 @@ const Users = () => {
             console.log(error)
         })
     }
-    mostrarUsers()
-    // console.log(users)
+    useEffect(()=>{
+      mostrarUsers()
+    }, [])
+    console.log(users)
   return (
-    <div>Users</div>
+    <section>
+      {
+        users.map((user)=>(
+          <div key={user.id}>
+            <h1>{user.name}</h1>
+          </div>
+        ))
+      }
+    </section>
   )
 }
 
